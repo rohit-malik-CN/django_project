@@ -8,8 +8,10 @@ from .models import ProjectUser, Project, Person
 
 
 @csrf_exempt
-@require_http_methods(["POST"])
+@require_http_methods(["OPTIONS", "POST"])
 def create_user(request):
+    if request.method == "OPTIONS":
+        return HttpResponse(json.dumps({"Message": "wait"}))
     user_info = json.loads(request.body.decode('utf-8'))
     user = Person(person_name=user_info["user_name"])
     user.save()
@@ -17,8 +19,10 @@ def create_user(request):
 
 
 @csrf_exempt
-@require_http_methods(["POST"])
+@require_http_methods(["OPTIONS", "POST"])
 def create_project(request):
+    if request.method == "OPTIONS":
+        return HttpResponse(json.dumps({"Message": "wait"}))
     project_info = json.loads(request.body.decode('utf-8'))
     project = Project(project_name=project_info["project_name"])
     project.save()
@@ -26,10 +30,12 @@ def create_project(request):
 
 
 @csrf_exempt
-@require_http_methods(["POST"])
+@require_http_methods(["OPTIONS", "POST"])
 def assign_project(request):
+    if request.method == "OPTIONS":
+        return HttpResponse(json.dumps({"Message": "wait"}))
     details = json.loads(request.body.decode('utf-8'))
-    project = Project.objects.get(project_name=details["project_id"])
+    project = Project.objects.get(id=details["project_id"])
     user_list = details["user_list"]
     for user_id in user_list:
         user = Person.objects.get(id=user_id)
@@ -39,10 +45,12 @@ def assign_project(request):
 
 
 @csrf_exempt
-@require_http_methods(["POST"])
+@require_http_methods(["OPTIONS", "POST"])
 def assign_mentors(request):
+    if request.method == "OPTIONS":
+        return HttpResponse(json.dumps({"Message": "wait"}))
     details = json.loads(request.body.decode('utf-8'))
-    project = Project.objects.get(project_name=details["project_name"])
+    project = Project.objects.get(id=details["project_id"])
     mentor = Person.objects.get(id=details["mentor_id"])
     temp_project_user = ProjectUser(project_id=project, person_id=mentor, is_mentor=True)
     temp_project_user.save()

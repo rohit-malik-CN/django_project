@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+SWAGGER_YAML_FILE = os.path.abspath('openapi.yaml')
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myapp1'
+    'myapp1',
+    'swagger_ui',
 ]
 
 MIDDLEWARE = [
