@@ -25,7 +25,8 @@ SECRET_KEY = '=$epj@i6f0xe5%*^j6gkgq6&2v%s@n5vdbg7!&p=li&03^m9$%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['http://taa8cebad8ebf4c309d290d6d1a9ab22f-8000.public.cy.devfactory.com/',
+                 'http://taa8cebad8ebf4c309d290d6d1a9ab22f-8080.public.cy.devfactory.com/']
 
 
 # Application definition
