@@ -4,7 +4,7 @@ info:
   title: DjangoProject
   description: A Simple django API for an organisation handling team projects
   contact: {}
-host: taa8cebad8ebf4c309d290d6d1a9ab22f-8080.public.cy.devfactory.com
+host: taa8cebad8ebf4c309d290d6d1a9ab22f-8000.public.cy.devfactory.com
 basePath: /myapp1
 schemes:
 - http
