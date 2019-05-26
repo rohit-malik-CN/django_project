@@ -25,8 +25,8 @@ SECRET_KEY = '=$epj@i6f0xe5%*^j6gkgq6&2v%s@n5vdbg7!&p=li&03^m9$%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['taa8cebad8ebf4c309d290d6d1a9ab22f-8000.public.cy.devfactory.com',
-                 'taa8cebad8ebf4c309d290d6d1a9ab22f-8080.public.cy.devfactory.com',
+ALLOWED_HOSTS = ['rohit-malik-CN-django-8000.public.cy.devfactory.com',
+                 'rohit-malik-CN-django-8080.public.cy.devfactory.com',
                  '127.0.0.1'
                  ]
 
@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp1',
     'swagger_ui',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -55,18 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8080'
-]
-CORS_ORIGIN_REGEX_WHITELIST = [
-    'http://localhost:8080'
-]
 ROOT_URLCONF = 'django_project.urls'
 
 TEMPLATES = [
