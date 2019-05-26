@@ -66,15 +66,16 @@ def assign_mentors(request):
 @error_checks
 @require_http_methods(["GET"])
 def get_mentees(request,mentor_id):
-    project_ids = ProjectUser.objects.filter(person_id=mentor_id, is_mentor=True).values_list('project_id')
-    user_id_list = []
-    for project_id in project_ids:
-        user_ids = ProjectUser.objects.filter(project_id=project_id, is_mentor=False).values_list('person_id', flat=True)
-        for user_id in user_ids:
-            user_id_list.append(user_id)
+    project_ids = ProjectUser.objects.filter(person_id=mentor_id, is_mentor=True).values_list('project_id', flat=True)
+    project_id_list = list(project_ids)
+    user_ids = ProjectUser.objects.filter(project_id__in=project_id_list, is_mentor=False).values_list('person_id', flat=True)
+    user_id_list = list(user_ids)
     user_id_list = list(set(user_id_list))
+    user_names = Person.objects.filter(id__in=user_id_list).values_list('person_name', flat=True)
+    user_names_list = list(user_names)
     response = {
         "user ids": user_id_list,
+        "user_names": user_names_list
     }
     return HttpResponse(json.dumps(response))
 
@@ -84,8 +85,8 @@ def get_mentees(request,mentor_id):
 @require_http_methods(["GET"])
 def get_projects(request,mentor_id):
     project_ids = ProjectUser.objects.filter(person_id=mentor_id, is_mentor=True).values_list('project_id', flat=True)
-    project_names = ProjectUser.objects.filter(person_id=mentor_id, is_mentor=True).values_list('project_name', flat=True)
     project_id_list = list(project_ids)
+    project_names = Project.objects.filter(id__in=project_id_list).values_list('project_name', flat=True)
     project_name_list = list(project_names)
     response = {
         "project ids": project_id_list,
