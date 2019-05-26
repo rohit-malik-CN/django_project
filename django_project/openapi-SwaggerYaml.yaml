@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: 'v1'
   title: DjangoProject
-  description: A Simple django API for an organisation with
+  description: A Simple django API for an organisation handling team projects
   contact: {}
 host: 127.0.0.1:8000
 basePath: /myapp1
@@ -13,7 +13,7 @@ consumes:
 produces:
 - application/json
 paths:
-  /createuser/:
+  /user/:
     post:
       description: Create a new user
       summary: Create a new user
@@ -32,7 +32,13 @@ paths:
         200:
           description: Success response
           headers: {}
-  /createproject/:
+        412:
+          description: The pre condition given in the request evaluated to false by the server.
+          headers: {}
+        450:
+          description: Data not found in the database with the provided values.
+          headers: {}
+  /project/:
     post:
       description: Create a new project
       summary: Create a new project
@@ -51,7 +57,13 @@ paths:
         200:
           description: Success response
           headers: {}
-  /assignproject/:
+        412:
+          description: The pre condition given in the request evaluated to false by the server.
+          headers: {}
+        450:
+          description: Data not found in the database with the provided values.
+          headers: {}
+  /project/user/:
     post:
       description: Assign an existing project to users
       summary: Assign an existing project to users
@@ -70,7 +82,13 @@ paths:
         200:
           description: Success response
           headers: {}
-  /project/assignmentor/:
+        412:
+          description: The pre condition given in the request evaluated to false by the server.
+          headers: {}
+        450:
+          description: Data not found in the database with the provided values.
+          headers: {}
+  /project/mentor/:
     post:
       description: Assing a mentor to an existing project
       summary: Assing a mentor to an existing project
@@ -89,7 +107,13 @@ paths:
         200:
           description: Success response
           headers: {}
-  /project/mentor/{mentor_id}/:
+        412:
+          description: The pre condition given in the request evaluated to false by the server.
+          headers: {}
+        450:
+          description: Data not found in the database with the provided values.
+          headers: {}
+  /mentor/{mentor_id}/mentees/:
     get:
       description: Get the mentees of a given mentor
       summary: Get the mentees of a given mentor
@@ -107,8 +131,37 @@ paths:
       responses:
         200:
           description: Success response
-          schema:
-            type: object
+          headers: {}
+        412:
+          description: The pre condition given in the request evaluated to false by the server.
+          headers: {}
+        450:
+          description: Data not found in the database with the provided values.
+          headers: {}
+  /mentor/{mentor_id}/projects/:
+    get:
+      description: Get projects user is mentoring
+      summary: Get projects user is mentoring
+      operationId: UserProjectsByUserIdGet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: mentor_id
+        in: path
+        required: true
+        type: integer
+        format: int32
+        description: User id of the user
+      responses:
+        200:
+          description: Success response
+          headers: {}
+        412:
+          description: The pre condition given in the request evaluated to false by the server.
+          headers: {}
+        450:
+          description: Data not found in the database with the provided values.
           headers: {}
   /project/{project_id}/:
     get:
@@ -128,29 +181,12 @@ paths:
       responses:
         200:
           description: Success response
-          schema:
-            type: object
           headers: {}
-  /user/{user_id}/projects/:
-    get:
-      description: Get projects user is mentoring
-      summary: Get projects user is mentoring
-      operationId: UserProjectsByUserIdGet
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: user_id
-        in: path
-        required: true
-        type: integer
-        format: int32
-        description: User id of the user
-      responses:
-        200:
-          description: Success response
-          schema:
-            type: object
+        412:
+          description: The pre condition given in the request evaluated to false by the server.
+          headers: {}
+        450:
+          description: Data not found in the database with the provided values.
           headers: {}
 definitions:
   CreateuserRequest:

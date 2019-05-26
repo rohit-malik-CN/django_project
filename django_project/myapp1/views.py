@@ -5,9 +5,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 import json
 from .models import ProjectUser, Project, Person
+from .error_handle import error_checks
 
 
 @csrf_exempt
+@error_checks
 @require_http_methods(["OPTIONS", "POST"])
 def create_user(request):
     if request.method == "OPTIONS":
@@ -19,6 +21,7 @@ def create_user(request):
 
 
 @csrf_exempt
+@error_checks
 @require_http_methods(["OPTIONS", "POST"])
 def create_project(request):
     if request.method == "OPTIONS":
@@ -30,6 +33,7 @@ def create_project(request):
 
 
 @csrf_exempt
+@error_checks
 @require_http_methods(["OPTIONS", "POST"])
 def assign_project(request):
     if request.method == "OPTIONS":
@@ -45,6 +49,7 @@ def assign_project(request):
 
 
 @csrf_exempt
+@error_checks
 @require_http_methods(["OPTIONS", "POST"])
 def assign_mentors(request):
     if request.method == "OPTIONS":
@@ -58,6 +63,7 @@ def assign_mentors(request):
 
 
 @csrf_exempt
+@error_checks
 @require_http_methods(["GET"])
 def get_mentees(request,mentor_id):
     project_ids = ProjectUser.objects.filter(person_id=mentor_id, is_mentor=True).values_list('project_id')
@@ -67,20 +73,29 @@ def get_mentees(request,mentor_id):
         for user_id in user_ids:
             user_id_list.append(user_id)
     user_id_list = list(set(user_id_list))
-    return HttpResponse(json.dumps(user_id_list))
-
+    response = {
+        "user ids": user_id_list,
+    }
+    return HttpResponse(json.dumps(response))
 
 
 @csrf_exempt
+@error_checks
 @require_http_methods(["GET"])
 def get_projects(request,mentor_id):
     project_ids = ProjectUser.objects.filter(person_id=mentor_id, is_mentor=True).values_list('project_id', flat=True)
+    project_names = ProjectUser.objects.filter(person_id=mentor_id, is_mentor=True).values_list('project_name', flat=True)
     project_id_list = list(project_ids)
-    project_id_list = list(set(project_id_list))
-    return HttpResponse(json.dumps(project_id_list))
+    project_name_list = list(project_names)
+    response = {
+        "project ids": project_id_list,
+        "project names": project_name_list
+    }
+    return HttpResponse(json.dumps(response))
 
 
 @csrf_exempt
+@error_checks
 @require_http_methods(["GET"])
 def get_users(request,project_id):
     user_ids = ProjectUser.objects.filter(project_id=project_id, is_mentor=False).values_list('person_id', flat=True)
@@ -90,8 +105,10 @@ def get_users(request,project_id):
     user_id_list = list(set(user_id_list))
     mentor_id_list = list(set(mentor_id_list))
     response = {
-        "mentors":mentor_id_list,
-        "users":user_id_list
+        "mentors": mentor_id_list,
+        "users": user_id_list
     }
     return HttpResponse(json.dumps(response))
+
+
 
