@@ -25,8 +25,8 @@ SECRET_KEY = '=$epj@i6f0xe5%*^j6gkgq6&2v%s@n5vdbg7!&p=li&03^m9$%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['rohit-malik-CN-django-8000.public.cy.devfactory.com',
-                 'rohit-malik-CN-django-8080.public.cy.devfactory.com',
+ALLOWED_HOSTS = ['rohit-malik-cn-django-8000.public.cy.devfactory.com',
+                 'rohit-malik-cn-django-8080.public.cy.devfactory.com',
                  '127.0.0.1'
                  ]
 
