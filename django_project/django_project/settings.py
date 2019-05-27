@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp1',
     'swagger_ui',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
